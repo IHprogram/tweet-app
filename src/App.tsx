@@ -1,6 +1,11 @@
-import React from 'react'
-// import styles from './App.module.scss'
+import React from 'react';
 import Header from './components/header/Header';
+import Login from './components/Login'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
 
 const App: React.FC = () => {
   const styles = {
@@ -23,11 +28,24 @@ const App: React.FC = () => {
     'padding': '10px 40px'
   }
   return (
-    <div style={root}>
-      <div style={wrapper}>
+    <Router>
+      <div>
         <Header />
+
+        <Switch>
+          <Route exact path='/login'>
+            <Login />
+          </Route>
+
+          <Route exact path='/'>
+            <div style={root}>
+              <div style={wrapper}>
+              </div>
+            </div>
+          </Route>
+        </Switch>
       </div>
-    </div>
+    </Router>
   )
 }
 
