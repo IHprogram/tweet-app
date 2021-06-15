@@ -9,8 +9,13 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 
-const App: React.FC = () => {
+// type Props = {
+//   getState: boolean
+// }
+
+const App = () => {
   const styles = {
     'color': 'aqua'
   }
@@ -30,10 +35,16 @@ const App: React.FC = () => {
     'width': '70vw',
     'padding': '10px 40px'
   }
+
+  const getState = useSelector((state) => state.Tweet.login_user);
+  const kakunin = () => {
+    console.log(getState)
+  }
+
   return (
     <Router>
       <div>
-        <Header />
+        <Header getState={getState} />
 
         <Switch>
           <Route exact path='/login'>
@@ -55,6 +66,7 @@ const App: React.FC = () => {
           <Route exact path='/'>
             <div style={root}>
               <div style={wrapper}>
+                <button onClick={kakunin}>確認</button>
               </div>
             </div>
           </Route>
