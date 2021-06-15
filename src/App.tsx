@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './components/header/Header';
-import Login from './components/Login'
+import Login from './components/Login';
+import Register from './components/Register';
 import {
   BrowserRouter as Router,
   Switch,
@@ -35,6 +36,10 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path='/login'>
             <Login />
+          </Route>
+
+          <Route exact path='/register'>
+            <Register />
           </Route>
 
           <Route exact path='/'>

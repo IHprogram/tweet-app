@@ -27,6 +27,7 @@ const Header: React.FC = () => {
             <Link to='/' style={styles}>Tweet App</Link>
           </Typography>
           <Link to='/login' style={styles}>ログイン</Link>
+          <Link to='/register' style={styles}>新規登録</Link>
         </Toolbar>
       </AppBar>
     </div>
