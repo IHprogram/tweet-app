@@ -3,6 +3,7 @@ import Header from './components/header/Header';
 import Login from './components/Login';
 import Register from './components/Register';
 import TweetForm from './components/TweetForm';
+import Detail from './components/Detail';
 import {
   BrowserRouter as Router,
   Switch,
@@ -45,6 +46,10 @@ const App: React.FC = () => {
 
           <Route exact path='/tweetform'>
             <TweetForm />
+          </Route>
+
+          <Route exact path='/detail/:id'>
+            <Detail />
           </Route>
 
           <Route exact path='/'>
