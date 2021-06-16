@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +11,10 @@ import Grid from '@material-ui/core/Grid';
 import {
   Link
 } from 'react-router-dom';
+import firebase from '../firebase/firebase'
+import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom'
+import { setUserInfo } from "../actions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -33,8 +37,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn: React.FC = () => {
+const SignIn = () => {
   const classes = useStyles()
+
+  const [email, setEmail] = useState(''),
+    [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  const inputEmail = (e) => {
+    const new_value = e.target.value;
+    setEmail(new_value)
+  };
+
+  const inputPassword = (e) => {
+    const new_value = e.target.value;
+    setPassword(new_value)
+  };
+
+  const login = (): void => {
+    const loginEmail: string = email
+    const loginPassword: string = password
+    console.log(loginEmail)
+    console.log(loginPassword)
+
+    firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword)
+      .then(result => {
+        dispatch(setUserInfo('名前です', loginEmail));
+        console.log(result);
+        history.push('/');
+      }).catch((error) => {
+        alert('メールアドレスかパスワードが間違えています')
+      })
+  }
+
   return (
     <Container component="main" maxWidth="xs" >
       <CssBaseline />
@@ -56,7 +94,9 @@ const SignIn: React.FC = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={inputEmail}
           />
+
           <TextField
             variant="outlined"
             margin="normal"
@@ -67,17 +107,16 @@ const SignIn: React.FC = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={inputPassword}
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
+
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={login}
           >
             ログインする
           </Button>
@@ -87,11 +126,6 @@ const SignIn: React.FC = () => {
                 登録していない方はこちらから
               </Link>
             </Grid>
-            {/* <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid> */}
           </Grid>
         </form>
       </div>
