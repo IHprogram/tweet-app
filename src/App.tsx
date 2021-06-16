@@ -44,9 +44,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      console.log('動いたよ')
-      console.log(getState);
-      console.log(loginUser);
       setLoginUser(getState);
       if (user) {
         console.log('ログイン中です')
