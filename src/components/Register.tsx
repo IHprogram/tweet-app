@@ -73,6 +73,7 @@ const SignUp = () => {
 
     firebase.auth().createUserWithEmailAndPassword(newUserInfo.email, registerPassword)
       .then(async result => {
+        console.log(result)
         await dispatch(setUserInfo(newUserInfo.name, newUserInfo.email));
         // 「firebase.auth().currentUser」の後に「!」で修飾することで、「firebase.auth().currentUserがnullならupdateProfileを行わない」という処理を行う。
         firebase.auth().currentUser!.updateProfile({

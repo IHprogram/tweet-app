@@ -65,7 +65,11 @@ const SignIn = () => {
 
     firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword)
       .then(result => {
-        dispatch(setUserInfo('名前です', loginEmail));
+        const userName = result.user!.displayName;
+        if (userName) {
+          console.log(userName)
+        }
+        dispatch(setUserInfo(userName, loginEmail));
         console.log(result);
         history.push('/');
       }).catch((error) => {
