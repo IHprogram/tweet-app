@@ -11,7 +11,11 @@ import firebase from '../../firebase/firebase'
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../actions";
 
-const Header: React.FC = (props) => {
+interface Props {
+  loginUser: boolean
+}
+
+const Header = ({ loginUser }: Props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -28,17 +32,9 @@ const Header: React.FC = (props) => {
     'height': '70px',
   }
 
-  const getState = useSelector((state) => state.Tweet.login_user);
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      console.log('動いたよ')
-      console.log(props)
-    })
-  }, [getState]);
-
   const LoginOrLogout = (props) => {
     console.log(props)
+
     const clickLogout = () => {
       firebase.auth().signOut()
         .then(result => {
@@ -49,7 +45,8 @@ const Header: React.FC = (props) => {
           alert('ログアウトに失敗しました。お手数ですがもう1度お試しください')
         })
     };
-    if (props.getState === true) {
+
+    if (props.loginUser === true) {
       return (
         <React.Fragment>
           <button color="secondary" onClick={() => { clickLogout(); }}>ログアウト</button>
@@ -62,7 +59,6 @@ const Header: React.FC = (props) => {
           <Link to='/register' style={styles}>新規登録</Link>
           <Link to='/tweetform' style={styles}>投稿する</Link>
           <Link to='/detail/100' style={styles}>詳細画面(仮置き)</Link>
-          {/* <button color="secondary" onClick={() => history.push('/login')}>ログイン</button> */}
         </React.Fragment>
       )
     }
@@ -76,12 +72,7 @@ const Header: React.FC = (props) => {
             <Link to='/' style={styles}>Tweet App</Link>
           </div>
           <div>
-            <LoginOrLogout getState={props.getState} />
-            {/* <Link to='/login' style={styles}>ログイン</Link>
-            <Link to='/register' style={styles}>新規登録</Link>
-            <Link to='/tweetform' style={styles}>投稿する</Link>
-            <Link to='/detail/100' style={styles}>詳細画面(仮置き)</Link> */}
-            {/* <button color="secondary" onClick={() => { clickLogout(); }}>ログアウト</button> */}
+            <LoginOrLogout loginUser={loginUser} />
           </div>
         </div>
       </AppBar>

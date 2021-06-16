@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux'
-import Tweet from './tweet'
+import User from './user'
 
-export default combineReducers({ Tweet })
+export default combineReducers({ User })

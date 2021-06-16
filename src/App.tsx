@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/header/Header';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -10,12 +10,11 @@ import {
   Route,
 } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
+import firebase from './firebase/firebase'
+import { UserInfo } from './Types';
 
-// type Props = {
-//   getState: boolean
-// }
 
-const App = () => {
+const App: React.FC = () => {
   const styles = {
     'color': 'aqua'
   }
@@ -36,15 +35,31 @@ const App = () => {
     'padding': '10px 40px'
   }
 
-  const getState = useSelector((state) => state.Tweet.login_user);
+  const getState = useSelector((state: { User: UserInfo }) => state.User.login_user);
+  const [loginUser, setLoginUser] = useState(getState)
+
   const kakunin = () => {
-    console.log(getState)
+    console.log(loginUser)
   }
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      console.log('動いたよ')
+      console.log(getState);
+      console.log(loginUser);
+      setLoginUser(getState);
+      if (user) {
+        console.log('ログイン中です')
+      } else {
+        console.log('ログアウト中です')
+      }
+    })
+  }, [getState]);
 
   return (
     <Router>
       <div>
-        <Header getState={getState} />
+        <Header loginUser={loginUser} />
 
         <Switch>
           <Route exact path='/login'>

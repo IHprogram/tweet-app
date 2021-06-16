@@ -41,12 +41,6 @@ const SignUp: React.FC = () => {
     [email, setEmail] = useState(''),
     [password, setPassword] = useState('');
 
-  // interface RegisterInfo {
-  //   name: string;
-  //   email: string;
-  //   password: string;
-  // }
-
   const inputName = (e) => {
     const new_value = e.target.value;
     setName(new_value)
