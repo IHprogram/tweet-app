@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import firebase from '../firebase/firebase'
 import { setUserInfo } from "../actions";
 import { useHistory } from 'react-router-dom'
+import { UserInfo } from '../Types';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SignUp: React.FC = () => {
+const SignUp = () => {
   const history = useHistory();
 
   const [name, setName] = useState(''),
@@ -58,26 +59,34 @@ const SignUp: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const register = () => {
+  const register = (): void => {
     console.log('registerです')
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(async result => {
-        console.log(name)
-        console.log(email)
-        dispatch(setUserInfo(name, email));
-        // await firebase.auth().currentUser.updateProfile({
-        //     displayName: name
+
+    // 入力した名前、メールアドレス、パスワードの型チェック
+    // const registerName: string = name;
+    // const registerEmail: string = email;
+    const registerPassword: string = password;
+
+    const newUserInfo: UserInfo = {
+      name: name,
+      email: email,
+      login_user: true // 不要だが、配置しないとエラーが発生するため仮置き。
+    }
+
+    firebase.auth().createUserWithEmailAndPassword(newUserInfo.email, registerPassword)
+      .then(result => {
+        dispatch(setUserInfo(newUserInfo.name, newUserInfo.email));
+        //   firebase.auth().currentUser.updateProfile({
+        //     displayName: newUserInfo.name
         //   }).then(result2 => {
-        //       const user = result.user;
-        //       if (user) {
-        //           console.log(user)
-        //           // const user_id = result.user.uid;
-        //           // const user_email = result.user.email;
-        //       dispatch(setUserInfo(name, email));
-        //         }
-        //       }).catch((error) => {
-        //           alert('ユーザー登録に失敗しました。お手数ですがもう一度やり直してください')
-        //         })
+
+        //   const user = result.user;
+        //   if (user) {
+        //     console.log(user)
+        //   }
+        // }).catch((error) => {
+        //   alert('ユーザー登録に失敗しました。お手数ですがもう一度やり直してください')
+        // })
         console.log(result);
         history.push('/');
       }).catch((error) => {

@@ -30,6 +30,7 @@ const Header = ({ loginUser }: Props) => {
     'justifyContent': 'spaceBetween',
     'alignItems': 'center',
     'height': '70px',
+    'padding': '0 20px'
   }
 
   const LoginOrLogout = (props) => {
@@ -65,7 +66,7 @@ const Header = ({ loginUser }: Props) => {
   }
 
   return (
-    <div style={styles}>
+    <div>
       <AppBar position="static">
         <div style={wrapper}>
           <div>
