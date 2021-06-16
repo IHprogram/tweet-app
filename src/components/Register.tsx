@@ -72,19 +72,20 @@ const SignUp = () => {
     }
 
     firebase.auth().createUserWithEmailAndPassword(newUserInfo.email, registerPassword)
-      .then(result => {
-        dispatch(setUserInfo(newUserInfo.name, newUserInfo.email));
-        //   firebase.auth().currentUser.updateProfile({
-        //     displayName: newUserInfo.name
-        //   }).then(result2 => {
-
-        //   const user = result.user;
-        //   if (user) {
-        //     console.log(user)
-        //   }
-        // }).catch((error) => {
-        //   alert('ユーザー登録に失敗しました。お手数ですがもう一度やり直してください')
-        // })
+      .then(async result => {
+        await dispatch(setUserInfo(newUserInfo.name, newUserInfo.email));
+        // 「firebase.auth().currentUser」の後に「!」で修飾することで、「firebase.auth().currentUserがnullならupdateProfileを行わない」という処理を行う。
+        firebase.auth().currentUser!.updateProfile({
+          displayName: newUserInfo.name
+        })
+          .then(result2 => {
+            const user = result.user;
+            if (user) {
+              console.log(user)
+            }
+          }).catch((error) => {
+            alert('ユーザー登録に失敗しました。お手数ですがもう一度やり直してください')
+          })
         console.log(result);
         history.push('/');
       }).catch((error) => {
