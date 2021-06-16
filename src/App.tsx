@@ -152,10 +152,7 @@ const App: React.FC = () => {
                     <p>ツイートはありません</p>
                     :
                     allState.map((element) => {
-                      element.usersTweets.map((element2, index) => {
-                        // element2.tweetでツイートが取得できることは確認済みだが、表示されない。
-                        <li key={index}>{element2.tweet}</li>
-                      }
+                      return element.usersTweets.map((element2, index) => { return <li key={index}>{element2.tweet}</li> }
                       )
                     })
                   }
