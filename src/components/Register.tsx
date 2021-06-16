@@ -63,8 +63,6 @@ const SignUp = () => {
     console.log('registerです')
 
     // 入力した名前、メールアドレス、パスワードの型チェック
-    // const registerName: string = name;
-    // const registerEmail: string = email;
     const registerPassword: string = password;
 
     const newUserInfo: UserInfo = {
