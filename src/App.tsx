@@ -14,9 +14,18 @@ import firebase from './firebase/firebase'
 import { UserInfo, Tweet } from './Types';
 import { setTweets, fetchTweets, fetchUserId } from './actions';
 
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+
 const App: React.FC = () => {
   const styles = {
-    'color': 'aqua'
+    'listStyle': 'none',
+    'marginBottom': '20px'
+  }
+
+  const ulStyle = {
+    'padding': '0'
   }
 
   const root = {
@@ -107,14 +116,24 @@ const App: React.FC = () => {
             <div style={root}>
               <div style={wrapper}>
                 <button onClick={kakunin}>確認!</button>
-                <ul>
+                <ul style={ulStyle}>
                   {tweetInfo.length === 0 && (
                     <p>ツイートはありません</p>
                   )}
                   {tweetInfo.length > 0 && (
                     tweetInfo.map((element) => {
                       return element.usersTweets.map((element2) => {
-                        return <li key={element2.tweetId}>{element2.tweet}</li>
+                        return (
+                          <li key={element2.tweetId} style={styles}>
+                            <Card>
+                              <CardContent>
+                                <Typography>
+                                  {element2.tweet}
+                                </Typography>
+                              </CardContent>
+                            </Card>
+                          </li>
+                        )
                       })
                     })
                   )}
