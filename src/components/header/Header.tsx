@@ -51,6 +51,7 @@ const Header = ({ loginUser }: Props) => {
       return (
         <React.Fragment>
           <button color="secondary" onClick={() => { clickLogout(); }}>ログアウト</button>
+          <Link to='/tweetform' style={styles}>投稿する</Link>
         </React.Fragment>
       )
     } else {
@@ -58,8 +59,6 @@ const Header = ({ loginUser }: Props) => {
         <React.Fragment>
           <Link to='/login' style={styles}>ログイン</Link>
           <Link to='/register' style={styles}>新規登録</Link>
-          <Link to='/tweetform' style={styles}>投稿する</Link>
-          <Link to='/detail/100' style={styles}>詳細画面(仮置き)</Link>
         </React.Fragment>
       )
     }

@@ -2,26 +2,40 @@ import React from 'react'
 import {
   useLocation
 } from 'react-router-dom';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
 const Detail = () => {
-  // const location = useLocation();
-  // const task = location.state.somedata;
-  // console.log(location)
+  const location: any = useLocation();
+  const tweet: string = location.state.tweetdata.tweet;
+  const userId: string = location.state.userId;
+
+  console.log(tweet)
+  console.log(location)
+
+  const styles = {
+    'width': '70vw',
+    'margin': '50px auto 0'
+  }
+
+  const styles2 = {
+    'width': '70%',
+    'margin': '0 auto'
+  }
+
   return (
     <div>
-      <div>
-        <p>ユーザー名がここに入ります</p>
-      </div>
-      {/* <ul>
-        <li>チケット名: {.title}</li>
-        <li>詳細: {task.detail}</li>
-        <li>担当者: {task.human}</li>
-        <li>期日: {task.deadline}</li>
-        <li>開始日: {task.start}</li>
-      </ul> */}
-      <div>
-        ツイート内容を表示
-      </div>
+      <Card style={styles}>
+        <CardContent style={styles2}>
+          <Typography>
+            投稿者ID：{userId}
+          </Typography>
+          <Typography>
+            ツイート内容：{tweet}
+          </Typography>
+        </CardContent>
+      </Card>
     </div>
   )
 }

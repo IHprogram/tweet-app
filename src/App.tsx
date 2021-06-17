@@ -123,13 +123,17 @@ const App: React.FC = () => {
                   )}
                   {tweetInfo.length > 0 && (
                     tweetInfo.map((element, index) => {
-                      return element.usersTweets.map((element2) => {
+                      return element.usersTweets.map((element2, index2) => {
                         return (
                           <li key={element2.tweetId} style={styles}>
                             <Card>
                               <CardContent>
                                 <Typography>
-                                  <Link to={`/detail/${index}`}>
+                                  <Link to={{
+                                    pathname: `/detail/${index + index2 + 1}`,
+                                    state: { tweetdata: element2, userId: element.userId }
+                                  }}
+                                  >
                                     {element2.tweet}
                                   </Link>
                                 </Typography>
