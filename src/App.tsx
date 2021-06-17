@@ -12,7 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import firebase from './firebase/firebase'
 import { UserInfo, Tweet } from './Types';
-import { setTweets } from './actions';
+import { setTweets, fetchTweets, fetchUserId } from './actions';
 
 const App: React.FC = () => {
   const styles = {
@@ -37,76 +37,30 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const allState = useSelector((state: { Tweet: any }) => state.Tweet[0]);
+  const initialTweetInfo: any[] = []
+
+  const allState = useSelector((state: { Tweet: any }) => state.Tweet);
   const getState = useSelector((state: { User: UserInfo }) => state.User.login_user);
-  const [loginUser, setLoginUser] = useState(getState)
-
-  // rowsには、ツイートの情報とユーザーIDの全てが格納される。
-  const rows: any[] = [];
-
-  // 実際にツイートを表示するための配列。
-  const tweetsRows: any[] = [];
+  const [loginUser, setLoginUser] = useState(getState),
+    [tweetInfo, setTweetInfo] = useState(initialTweetInfo);
 
   useEffect(() => {
     console.log('初回レンダリング');
-    // 以下、「誰がどんなツイートをしたか」をFirestoreから取得するための処理。
-
-    firebase
-      .firestore()
-      .collection(`users/`)
-      .get()
-      .then(async (snapshot) => {
-        console.log('やあ')
-        console.log(snapshot)
-        snapshot.forEach((doc) => {
-          // ユーザー情報を一人ずつ取得
-          const userId: string = doc.id;
-          console.log(userId)
-
-          const tweetArray: Tweet[] = [];
-
-          firebase
-            .firestore()
-            .collection(`users/${userId}/tweets/`)
-            .get()
-            .then(async (snapshot2) => {
-              // ユーザー一人一人のツイートをまとめる
-              snapshot2.forEach((doc2) => {
-                // ユーザーに紐づいたツイートを取得
-                console.log(doc2.data().tweet)
-                const getTweet: Tweet = {
-                  tweet: doc2.data().tweet
-                };
-                console.log(getTweet)
-                tweetArray.push(getTweet);
-                console.log(tweetArray)
-              })
-            });
-
-          console.log(tweetArray)
-
-          const newTweetArray = {
-            usersTweets: tweetArray,
-            userId: userId
-          };
-
-          rows.push(newTweetArray)
-          console.log(newTweetArray)
-        })
-        console.log(rows)
-        dispatch(setTweets(rows))
-      });
+    // 以下、「誰がどんなツイートをしたか」をFirestoreから全て取得するための処理。
+    dispatch(fetchUserId());
   }, []);
 
   const kakunin = () => {
     console.log(loginUser)
-    console.log(rows)
     console.log(allState)
-    allState.map((element) =>
-      element.usersTweets.map(element2 =>
-        console.log(element2.tweet)
+    console.log(tweetInfo)
+    if (tweetInfo) {
+      tweetInfo.map((element) =>
+        element.usersTweets.map(element2 =>
+          console.log(element2.tweet)
+        )
       )
-    )
+    }
   }
 
   useEffect(() => {
@@ -119,6 +73,13 @@ const App: React.FC = () => {
       }
     })
   }, [getState]);
+
+  useEffect(() => {
+    console.log(allState);
+    console.log(tweetInfo);
+    setTweetInfo(allState);
+    console.log(tweetInfo);
+  }, [allState]);
 
   return (
     <Router>
@@ -145,17 +106,18 @@ const App: React.FC = () => {
           <Route exact path='/'>
             <div style={root}>
               <div style={wrapper}>
-                <button onClick={kakunin}>確認</button>
+                <button onClick={kakunin}>確認!</button>
                 <ul>
-                  {/* この中身が空になっている */}
-                  {!(allState) ?
+                  {tweetInfo.length === 0 && (
                     <p>ツイートはありません</p>
-                    :
-                    allState.map((element) => {
-                      return element.usersTweets.map((element2, index) => { return <li key={index}>{element2.tweet}</li> }
-                      )
+                  )}
+                  {tweetInfo.length > 0 && (
+                    tweetInfo.map((element) => {
+                      return element.usersTweets.map((element2) => {
+                        return <li key={element2.tweetId}>{element2.tweet}</li>
+                      })
                     })
-                  }
+                  )}
                 </ul>
               </div>
             </div>
@@ -165,5 +127,4 @@ const App: React.FC = () => {
     </Router>
   )
 }
-
 export default App

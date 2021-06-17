@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
       console.log(action);
       const newArray = [...state, action.tweets]
       console.log(newArray)
-      return [...state, action.tweets]
+      return newArray
     default:
       return state
   }
