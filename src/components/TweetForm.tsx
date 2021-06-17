@@ -5,9 +5,16 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { addTweet } from "../actions";
+import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   loginUserId: string
+}
+
+interface newTweet {
+  tweet: string;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -28,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 const TweetForm = ({ loginUserId }: Props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const [tweet, setTweet] = useState('');
 
@@ -38,8 +47,11 @@ const TweetForm = ({ loginUserId }: Props) => {
   }
 
   const submit = (): void => {
-    console.log(tweet);
-    console.log(loginUserId)
+    const newTweetOb: newTweet = {
+      tweet: tweet
+    }
+    dispatch(addTweet(newTweetOb, loginUserId));
+    history.push('/')
   }
 
   return (
