@@ -13,7 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import firebase from './firebase/firebase'
 import { UserInfo, Tweet } from './Types';
-import { setTweets, fetchTweets, fetchUserId } from './actions';
+import { fetchUserId } from './actions';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
