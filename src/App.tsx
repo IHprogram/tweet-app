@@ -52,7 +52,8 @@ const App: React.FC = () => {
   const allState = useSelector((state: { Tweet: any }) => state.Tweet);
   const getState = useSelector((state: { User: UserInfo }) => state.User.login_user);
   const [loginUser, setLoginUser] = useState(getState),
-    [tweetInfo, setTweetInfo] = useState(initialTweetInfo);
+    [tweetInfo, setTweetInfo] = useState(initialTweetInfo),
+    [loginUserId, setLoginUserId] = useState('');
 
   useEffect(() => {
     console.log('初回レンダリング');
@@ -64,13 +65,14 @@ const App: React.FC = () => {
     console.log(loginUser)
     console.log(allState)
     console.log(tweetInfo)
-    if (tweetInfo) {
-      tweetInfo.map((element) =>
-        element.usersTweets.map(element2 =>
-          console.log(element2.tweet)
-        )
-      )
-    }
+    console.log(loginUserId)
+    // if (tweetInfo) {
+    //   tweetInfo.map((element) =>
+    //     element.usersTweets.map(element2 =>
+    //       console.log(element2.tweet)
+    //     )
+    //   )
+    // }
   }
 
   useEffect(() => {
@@ -78,8 +80,11 @@ const App: React.FC = () => {
       setLoginUser(getState);
       if (user) {
         console.log('ログイン中です')
+        console.log(user)
+        setLoginUserId(user.uid);
       } else {
         console.log('ログアウト中です')
+        setLoginUserId('');
       }
     })
   }, [getState]);
@@ -106,7 +111,7 @@ const App: React.FC = () => {
           </Route>
 
           <Route exact path='/tweetform'>
-            <TweetForm />
+            <TweetForm loginUserId={loginUserId} />
           </Route>
 
           <Route exact path='/detail/:id'>

@@ -1,14 +1,14 @@
-import React from 'react'
-import Avatar from '@material-ui/core/Avatar';
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+interface Props {
+  loginUserId: string
+}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,8 +26,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TweetForm: React.FC = () => {
+const TweetForm = ({ loginUserId }: Props) => {
   const classes = useStyles();
+
+  const [tweet, setTweet] = useState('');
+
+  const inputTweet = (e): void => {
+    const new_value: string = e.target.value;
+    setTweet(new_value)
+    console.log(new_value);
+  }
+
+  const submit = (): void => {
+    console.log(tweet);
+    console.log(loginUserId)
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -47,17 +60,15 @@ const TweetForm: React.FC = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={inputTweet}
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={submit}
           >
             投稿する
           </Button>

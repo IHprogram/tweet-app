@@ -30,6 +30,16 @@ const Header = ({ loginUser }: Props) => {
     'padding': '0 20px'
   }
 
+  const buttonStyles = {
+    'backgroundColor': 'transparent',
+    'border': 'none',
+    'cursor': 'pointer',
+    'outline': 'none',
+    'padding': '0',
+    'color': '#ffffff',
+    'fontSize': '16px'
+  }
+
   const LoginOrLogout = (props) => {
     console.log(props)
 
@@ -47,8 +57,8 @@ const Header = ({ loginUser }: Props) => {
     if (props.loginUser === true) {
       return (
         <React.Fragment>
-          <button color="secondary" onClick={() => { clickLogout(); }}>ログアウト</button>
           <Link to='/tweetform' style={styles}>投稿する</Link>
+          <button style={buttonStyles} onClick={() => { clickLogout(); }}>ログアウト</button>
         </React.Fragment>
       )
     } else {
