@@ -8,6 +8,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Link
 } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import firebase from './firebase/firebase'
@@ -29,7 +30,7 @@ const App: React.FC = () => {
   }
 
   const root = {
-    'backgroundColor': '#ffd5c9',
+    'backgroundColor': '#e0ffff',
     'height': '100vh',
     'width': '100vw',
     'display': 'flex',
@@ -121,14 +122,16 @@ const App: React.FC = () => {
                     <p>ツイートはありません</p>
                   )}
                   {tweetInfo.length > 0 && (
-                    tweetInfo.map((element) => {
+                    tweetInfo.map((element, index) => {
                       return element.usersTweets.map((element2) => {
                         return (
                           <li key={element2.tweetId} style={styles}>
                             <Card>
                               <CardContent>
                                 <Typography>
-                                  {element2.tweet}
+                                  <Link to={`/detail/${index}`}>
+                                    {element2.tweet}
+                                  </Link>
                                 </Typography>
                               </CardContent>
                             </Card>
