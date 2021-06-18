@@ -123,7 +123,7 @@ const App: React.FC = () => {
                   {tweetInfo.length === 0 && (
                     <p>ツイートはありません</p>
                   )}
-                  {tweetInfo.length > 0 && (
+                  {tweetInfo.length > 0 && tweetInfo[0].usersTweets.length > 0 && (
                     tweetInfo.map((element, index) => {
                       return element.usersTweets.map((element2, index2) => {
                         return (
