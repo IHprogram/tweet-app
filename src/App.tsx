@@ -66,7 +66,7 @@ const App: React.FC = () => {
       setLoginUser(getState);
       if (user) {
         setLoginUserId(user.uid);
-        setLoginUser(true); //最終的には消す
+        setLoginUser(true)
       } else {
         setLoginUserId('');
       }

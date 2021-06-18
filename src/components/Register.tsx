@@ -68,7 +68,7 @@ const SignUp = () => {
     const newUserInfo: UserInfo = {
       name: name,
       email: email,
-      login_user: true // 不要だが、配置しないとエラーが発生するため仮置き。
+      login_user: true
     }
 
     firebase.auth().createUserWithEmailAndPassword(newUserInfo.email, registerPassword)
