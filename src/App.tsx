@@ -110,7 +110,7 @@ const App: React.FC = () => {
           </Route>
 
           <Route exact path='/detail/:id'>
-            <Detail />
+            <Detail loginUserId={loginUserId} />
           </Route>
 
           <Route exact path='/'>
@@ -131,7 +131,7 @@ const App: React.FC = () => {
                                 <Typography>
                                   <Link to={{
                                     pathname: `/detail/${index + index2 + 1}`,
-                                    state: { tweetdata: element2, userId: element.userId }
+                                    state: { tweetdata: element2, userId: element2.userId, all: element2 }
                                   }}
                                   >
                                     {element2.tweet}
