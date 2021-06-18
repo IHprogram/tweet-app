@@ -65,32 +65,16 @@ const App: React.FC = () => {
     firebase.auth().onAuthStateChanged((user) => {
       setLoginUser(getState);
       if (user) {
-        console.log('ログイン中です')
-        console.log(user)
-        console.log(user.uid)
-        console.log(typeof user.uid)
         setLoginUserId(user.uid);
         setLoginUser(true); //最終的には消す
       } else {
-        console.log('ログアウト中です')
         setLoginUserId('');
       }
     })
   }, []);
 
-  const kakunin = () => {
-    console.log(loginUser)
-    console.log(allState)
-    console.log(tweetInfo)
-    console.log(theState);
-  }
-
   useEffect(() => {
-    console.log(theState);
-    console.log(allState);
-    console.log(tweetInfo);
     setTweetInfo(allState);
-    console.log(tweetInfo);
   }, [allState]);
 
   return (
@@ -118,7 +102,6 @@ const App: React.FC = () => {
           <Route exact path='/'>
             <div style={root}>
               <div style={wrapper}>
-                <button onClick={kakunin}>確認!</button>
                 <ul style={ulStyle}>
                   {tweetInfo.length === 0 && (
                     <p>ツイートはありません</p>

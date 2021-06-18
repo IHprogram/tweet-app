@@ -62,15 +62,12 @@ const Detail = ({ loginUserId }: Props) => {
           <Typography>
             ツイート内容：{tweet}
           </Typography>
-          {/* <div style={buttonWrapper}> */}
           {userId === loginUserId ?
             <Box mx="auto">
               <Button variant="outlined" color="secondary" onClick={deleteButton}>削除</Button>
             </Box>
             :
-            (<div>
-              <Button onClick={check}>確認</Button>
-            </div>
+            (<div></div>
             )}
           {/* </div> */}
         </CardContent>
