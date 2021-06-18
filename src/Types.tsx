@@ -7,4 +7,5 @@ export interface UserInfo {
 export interface Tweet {
   tweet: string
   tweetId: string
+  userId: string
 }

@@ -13,7 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import firebase from './firebase/firebase'
 import { UserInfo, Tweet } from './Types';
-import { fetchUserId } from './actions';
+import { fetchAllTweets } from './actions';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -57,8 +57,9 @@ const App: React.FC = () => {
 
   useEffect(() => {
     console.log('初回レンダリング');
+
     // 以下、「誰がどんなツイートをしたか」をFirestoreから全て取得するための処理。
-    dispatch(fetchUserId());
+    dispatch(fetchAllTweets());
 
     firebase.auth().onAuthStateChanged((user) => {
       setLoginUser(getState);

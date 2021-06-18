@@ -26,3 +26,4 @@ package.json
 package-lock.json
 tsconfig.json
 yarn.lock
+admin.json
