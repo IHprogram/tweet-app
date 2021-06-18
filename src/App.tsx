@@ -59,6 +59,21 @@ const App: React.FC = () => {
     console.log('初回レンダリング');
     // 以下、「誰がどんなツイートをしたか」をFirestoreから全て取得するための処理。
     dispatch(fetchUserId());
+
+    firebase.auth().onAuthStateChanged((user) => {
+      setLoginUser(getState);
+      if (user) {
+        console.log('ログイン中です')
+        console.log(user)
+        console.log(user.uid)
+        console.log(typeof user.uid)
+        setLoginUserId(user.uid);
+        setLoginUser(true); //最終的には消す
+      } else {
+        console.log('ログアウト中です')
+        setLoginUserId('');
+      }
+    })
   }, []);
 
   const kakunin = () => {
@@ -66,28 +81,7 @@ const App: React.FC = () => {
     console.log(allState)
     console.log(tweetInfo)
     console.log(loginUserId)
-    // if (tweetInfo) {
-    //   tweetInfo.map((element) =>
-    //     element.usersTweets.map(element2 =>
-    //       console.log(element2.tweet)
-    //     )
-    //   )
-    // }
   }
-
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      setLoginUser(getState);
-      if (user) {
-        console.log('ログイン中です')
-        console.log(user)
-        setLoginUserId(user.uid);
-      } else {
-        console.log('ログアウト中です')
-        setLoginUserId('');
-      }
-    })
-  }, [getState]);
 
   useEffect(() => {
     console.log(allState);
