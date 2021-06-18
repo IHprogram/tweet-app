@@ -5,6 +5,7 @@ export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_TWEETS = 'SET_TWEETS';
 export const ADD_NEW_TWEET = 'ADD_NEW_TWEET';
+export const DELETE_STATE_TWEET = 'DELETE_STATE_TWEET';
 
 export const setUserInfo = (name, email) => {
   return (
@@ -40,6 +41,15 @@ export const addNewTweet = (tweet) => {
     {
       type: ADD_NEW_TWEET,
       tweet: tweet
+    }
+  )
+}
+
+export const deleteStateTweet = (tweetId) => {
+  return (
+    {
+      type: DELETE_STATE_TWEET,
+      tweetId: tweetId
     }
   )
 }
@@ -102,3 +112,20 @@ export const addTweet = (tweet, loginUserId) => (dispatch) => {
       console.dir(errors)
     })
 }
+
+export const deleteTweet = (tweetId) => (dispatch) => {
+  console.log('deleteするよ！')
+  console.log(tweetId)
+  firebase
+    .firestore()
+    .collection(`tweets`)
+    .doc(tweetId)
+    .delete()
+    .then(() => {
+      dispatch(deleteStateTweet(tweetId))
+    })
+    .catch(errors => {
+      console.dir(errors)
+    })
+}
+

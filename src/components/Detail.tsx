@@ -7,6 +7,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { Button } from "@material-ui/core";
 import Box from '@material-ui/core/Box';
+import { deleteTweet } from '../actions/index';
+import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom'
 
 interface Props {
   loginUserId: string
@@ -16,7 +19,11 @@ const Detail = ({ loginUserId }: Props) => {
   const location: any = useLocation();
   const tweet: string = location.state.tweetdata.tweet;
   const userId: string = location.state.userId;
+  const tweetId: string = location.state.tweetdata.tweetId;
   const all: any = location.state.all;
+
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   console.log(tweet)
   console.log(location)
@@ -36,8 +43,8 @@ const Detail = ({ loginUserId }: Props) => {
   }
 
   const deleteButton = () => {
-    console.log('削除します');
-    console.log(loginUserId);
+    dispatch(deleteTweet(tweetId))
+    history.push('/')
   }
 
   const check = () => {

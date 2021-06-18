@@ -50,6 +50,7 @@ const App: React.FC = () => {
   const initialTweetInfo: any[] = []
 
   const allState = useSelector((state: { Tweet: any }) => state.Tweet);
+  const theState = useSelector((state: { Tweet: any[] }) => state.Tweet[0]);
   const getState = useSelector((state: { User: UserInfo }) => state.User.login_user);
   const [loginUser, setLoginUser] = useState(getState),
     [tweetInfo, setTweetInfo] = useState(initialTweetInfo),
@@ -81,10 +82,11 @@ const App: React.FC = () => {
     console.log(loginUser)
     console.log(allState)
     console.log(tweetInfo)
-    console.log(loginUserId)
+    console.log(theState);
   }
 
   useEffect(() => {
+    console.log(theState);
     console.log(allState);
     console.log(tweetInfo);
     setTweetInfo(allState);
