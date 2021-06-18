@@ -41,12 +41,10 @@ const Header = ({ loginUser }: Props) => {
   }
 
   const LoginOrLogout = (props) => {
-    console.log(props)
 
     const clickLogout = () => {
       firebase.auth().signOut()
         .then(result => {
-          console.log('ログアウト成功です！')
           dispatch(logoutUser());
           history.push("/");
         }).catch((error) => {
