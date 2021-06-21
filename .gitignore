@@ -27,3 +27,9 @@ package-lock.json
 tsconfig.json
 yarn.lock
 admin.json
+src/firebase
+.firebase/
+.firebaserc
+dist/
+firebase.json
+404.html
