@@ -10,11 +10,13 @@ import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom'
 
 interface Props {
-  loginUserId: string
+  loginUserId: string,
+  userName: string
 }
 
 interface newTweet {
   tweet: string;
+  userName: string;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TweetForm = ({ loginUserId }: Props) => {
+const TweetForm = ({ loginUserId, userName }: Props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -43,12 +45,12 @@ const TweetForm = ({ loginUserId }: Props) => {
   const inputTweet = (e): void => {
     const new_value: string = e.target.value;
     setTweet(new_value)
-    console.log(new_value);
   }
 
   const submit = (): void => {
     const newTweetOb: newTweet = {
-      tweet: tweet
+      tweet: tweet,
+      userName: userName
     }
     dispatch(addTweet(newTweetOb, loginUserId));
     history.push('/')

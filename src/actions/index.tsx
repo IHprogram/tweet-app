@@ -11,7 +11,6 @@ export const setUserInfo = (name, email) => {
   return (
     {
       type: SET_USER_INFO,
-      // uid: uid,
       name: name,
       email: email,
       login_user: true
@@ -61,52 +60,38 @@ export const fetchAllTweets = () => (dispatch) => {
     .collection(`tweets/`)
     .get()
     .then((snapshot) => {
-      // ユーザー一人一人のツイートをまとめる
       snapshot.forEach((doc) => {
-        // ユーザーに紐づいたツイートを取得
-        // console.log(doc.id)
-        // console.log(doc.data())
+        // ツイートを取得
 
         const getTweetInfo: Tweet = {
           tweet: doc.data().tweet,
           tweetId: doc.id,
-          userId: doc.data().userId
+          userId: doc.data().userId,
+          userName: doc.data().userName
         };
-        // console.log(getTweetInfo)
         tweetArray.push(getTweetInfo);
       });
-      console.log(tweetArray);
-      // ユーザーに紐づいたツイートとユーザーのIDが格納される。
-      // const newTweetArray = {
-      //   usersTweets: tweetArray,
-      // };
-      // console.log(newTweetArray);
+      // 取得したツイート情報がstoreに格納される。
       dispatch(setTweets(tweetArray))
     });
 }
 
 
 export const addTweet = (tweet, loginUserId) => (dispatch) => {
-  console.log('addTweetです')
-  console.log(loginUserId)
   firebase
     .firestore()
     .collection(`tweets`)
-    .add({ tweet: tweet.tweet, userId: loginUserId })
+    .add({ tweet: tweet.tweet, userName: tweet.userName, userId: loginUserId })
     .then(result => {
 
       const getTweet: Tweet = {
         tweet: tweet.tweet,
         tweetId: result.id,
-        userId: loginUserId
+        userId: loginUserId,
+        userName: tweet.userName
       };
       dispatch(addNewTweet(getTweet));
       return loginUserId;
-    })
-    .then(result2 => {
-      console.log(result2)
-      console.log('呼ばれたぜ！')
-
     })
     .catch(errors => {
       console.dir(errors)

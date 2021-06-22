@@ -47,25 +47,27 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const initialTweetInfo: any[] = []
+  const initialTweetInfo: Tweet[] = []
 
   const allState = useSelector(state => state);
   const allTweets = useSelector((state: { Tweet: Tweet[] }) => state.Tweet);
-  // const theState = useSelector((state: { Tweet: any[] }) => state.Tweet[0]);
   const getState = useSelector((state: { User: UserInfo }) => state.User.login_user);
   const [loginUser, setLoginUser] = useState(getState),
     [tweetInfo, setTweetInfo] = useState(initialTweetInfo),
+    [userName, setUserName] = useState<string>(''),
     [loginUserId, setLoginUserId] = useState('');
 
   useEffect(() => {
-    console.log('初回レンダリング');
-
-    // 以下、「誰がどんなツイートをしたか」をFirestoreから全て取得するための処理。
+    // 以下、全ツイートをFirestoreから全て取得するための処理。
     dispatch(fetchAllTweets());
 
     firebase.auth().onAuthStateChanged((user) => {
       setLoginUser(getState);
       if (user) {
+        const value: string | null = user.displayName
+        if (value !== null) {
+          setUserName(value)
+        }
         setLoginUserId(user.uid);
         setLoginUser(true)
       } else {
@@ -94,7 +96,7 @@ const App: React.FC = () => {
           </Route>
 
           <Route exact path='/tweetform'>
-            <TweetForm loginUserId={loginUserId} />
+            <TweetForm loginUserId={loginUserId} userName={userName} />
           </Route>
 
           <Route exact path='/detail/:id'>
@@ -104,8 +106,6 @@ const App: React.FC = () => {
           <Route exact path='/'>
             <div style={root}>
               <div style={wrapper}>
-                <button onClick={() => console.log(allState)}>state全体の確認</button>
-                <button onClick={() => console.log(tweetInfo)}>確認</button>
                 <ul style={ulStyle}>
                   {tweetInfo.length === 0 && (
                     <p>ツイートはありません</p>
@@ -118,7 +118,7 @@ const App: React.FC = () => {
                             <Typography>
                               <Link to={{
                                 pathname: `/detail/${index + 1}`,
-                                state: { tweetdata: element, userId: element.userId, all: element }
+                                state: { tweetdata: element, userId: element.userId }
                               }}
                               >
                                 {element.tweet}

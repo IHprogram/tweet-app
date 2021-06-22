@@ -18,15 +18,12 @@ interface Props {
 const Detail = ({ loginUserId }: Props) => {
   const location: any = useLocation();
   const tweet: string = location.state.tweetdata.tweet;
+  const userName: string = location.state.tweetdata.userName;
   const userId: string = location.state.userId;
   const tweetId: string = location.state.tweetdata.tweetId;
-  const all: any = location.state.all;
 
   const history = useHistory();
   const dispatch = useDispatch();
-
-  console.log(tweet)
-  console.log(location)
 
   const styles = {
     'width': '70vw',
@@ -47,17 +44,16 @@ const Detail = ({ loginUserId }: Props) => {
     history.push('/')
   }
 
-  const check = () => {
-    console.log(all);
-    console.log(loginUserId)
-  }
-
   return (
     <div>
       <Card style={styles}>
         <CardContent style={styles2}>
-          <Typography>
+          {/* <button onClick={() => console.log(location)}>確認</button> */}
+          {/* <Typography>
             投稿者ID：{userId}
+          </Typography> */}
+          <Typography>
+            投稿者名：{userName}
           </Typography>
           <Typography>
             ツイート内容：{tweet}
@@ -69,7 +65,6 @@ const Detail = ({ loginUserId }: Props) => {
             :
             (<div></div>
             )}
-          {/* </div> */}
         </CardContent>
       </Card>
     </div>
