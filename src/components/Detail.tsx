@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  useLocation
+  useLocation, useParams
 } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,17 +10,25 @@ import Box from '@material-ui/core/Box';
 import { deleteTweet } from '../actions/index';
 import { useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom'
+import { Tweet } from '../Types';
+
 
 interface Props {
   loginUserId: string
 }
 
+interface LocationState {
+  tweetdata: Tweet,
+  userId: string
+}
+
 const Detail = ({ loginUserId }: Props) => {
-  const location: any = useLocation();
-  const tweet: string = location.state.tweetdata.tweet;
-  const userName: string = location.state.tweetdata.userName;
-  const userId: string = location.state.userId;
-  const tweetId: string = location.state.tweetdata.tweetId;
+  const location = useLocation();
+  const state = location.state as LocationState;
+  const tweet: string = state.tweetdata.tweet;
+  const userName: string = state.tweetdata.userName;
+  const userId: string = state.userId;
+  const tweetId: string = state.tweetdata.tweetId;
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -48,10 +56,6 @@ const Detail = ({ loginUserId }: Props) => {
     <div>
       <Card style={styles}>
         <CardContent style={styles2}>
-          {/* <button onClick={() => console.log(location)}>確認</button> */}
-          {/* <Typography>
-            投稿者ID：{userId}
-          </Typography> */}
           <Typography>
             投稿者名：{userName}
           </Typography>
