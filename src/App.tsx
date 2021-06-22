@@ -129,29 +129,6 @@ const App: React.FC = () => {
                       </li>
                     )
                   })}
-                  {/* {tweetInfo.length > 0 && tweetInfo[0].usersTweets.length > 0 && (
-                    tweetInfo.map((element, index) => {
-                      return element.usersTweets.map((element2, index2) => {
-                        return (
-                          <li key={element2.tweetId} style={styles}>
-                            <Card>
-                              <CardContent>
-                                <Typography>
-                                  <Link to={{
-                                    pathname: `/detail/${index + index2 + 1}`,
-                                    state: { tweetdata: element2, userId: element2.userId, all: element2 }
-                                  }}
-                                  >
-                                    {element2.tweet}
-                                  </Link>
-                                </Typography>
-                              </CardContent>
-                            </Card>
-                          </li>
-                        )
-                      })
-                    })
-                  )} */}
                 </ul>
               </div>
             </div>
@@ -162,57 +139,3 @@ const App: React.FC = () => {
   )
 }
 export default App
-
-
-// let unknownInput: unknown;
-// let anyInput: any;
-
-// unknownInput = 'hello';
-// console.log(unknownInput)
-// // unknownInput = 999;
-// console.log(unknownInput)
-
-// const text = anyInput
-
-// if (typeof unknownInput === 'string') {
-//   console.log(typeof unknownInput)
-// } else {
-//   console.log(typeof unknownInput)
-// }
-
-// function error(message: string) {
-//   throw new Error(message);
-// }
-
-// interface human {
-//   name: string,
-//   age: number
-// }
-
-// const human1: human = {
-//   name: 'iida',
-//   age: 24
-// }
-
-// console.log(human1)
-// console.log(typeof human1.name)
-// console.log(typeof human1.age)
-
-
-// interface obj {
-//   readonly name: string,
-//   age: number,
-//   hello(name: string): void
-// }
-
-// const obj2: obj = {
-//   name: 'iida',
-//   age: 24,
-//   hello(name: string) {
-//     console.log(name + 'です')
-//   }
-// }
-
-// console.log(obj2);
-// console.log(typeof obj2.name);
-// obj2.hello('飯田');
