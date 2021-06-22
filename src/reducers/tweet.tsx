@@ -7,28 +7,20 @@ const initialState: Tweet[] = [];
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_TWEETS:
-      console.log(state)
-      console.log(action)
-
+      state = [];
       const newArray = [...state, ...action.tweets]
-      console.log(newArray)
       return newArray
     case ADD_NEW_TWEET:
-      // const newUsersTweets1 = [...state[0].usersTweets, { tweet: action.tweet.tweet, tweetId: action.tweet.tweetId, userId: action.tweet.userId }]
-      // state.splice(1);
-      // state[0] = { usersTweets: newUsersTweets1 }
-      return state
+      return [...state, action.tweet]
     case DELETE_STATE_TWEET:
-      // const found2 = state[0].usersTweets.findIndex(element => element.tweetId === action.tweetId);
+      const found = state.findIndex(element => element.tweetId === action.tweetId);
 
-      // if (found2 !== -1) {
-      //   state[0].usersTweets.splice(found2, 1)
-      //   const newUsersTweets2 = [...state[0].usersTweets];
-      //   return [...state]
-      // } else {
-      //   return state
-      // }
-      return state
+      if (found !== -1) {
+        state.splice(found, 1)
+        return [...state]
+      } else {
+        return state
+      }
     default:
       return state
   }
