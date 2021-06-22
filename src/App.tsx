@@ -49,7 +49,8 @@ const App: React.FC = () => {
 
   const initialTweetInfo: any[] = []
 
-  const allState = useSelector((state: { Tweet: any }) => state.Tweet);
+  const allState = useSelector(state => state);
+  const allTweets = useSelector((state: { Tweet: Tweet[] }) => state.Tweet);
   const theState = useSelector((state: { Tweet: any[] }) => state.Tweet[0]);
   const getState = useSelector((state: { User: UserInfo }) => state.User.login_user);
   const [loginUser, setLoginUser] = useState(getState),
@@ -74,8 +75,9 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setTweetInfo(allState);
-  }, [allState]);
+    setTweetInfo([]);
+    setTweetInfo(allTweets);
+  }, [allTweets]);
 
   return (
     <Router>
@@ -102,11 +104,32 @@ const App: React.FC = () => {
           <Route exact path='/'>
             <div style={root}>
               <div style={wrapper}>
+                <button onClick={() => console.log(allState)}>state全体の確認</button>
+                <button onClick={() => console.log(tweetInfo)}>確認</button>
                 <ul style={ulStyle}>
                   {tweetInfo.length === 0 && (
                     <p>ツイートはありません</p>
                   )}
-                  {tweetInfo.length > 0 && tweetInfo[0].usersTweets.length > 0 && (
+                  {tweetInfo.map((element, index) => {
+                    return (
+                      <li key={element.tweetId} style={styles}>
+                        <Card>
+                          <CardContent>
+                            <Typography>
+                              <Link to={{
+                                pathname: `/detail/${index + 1}`,
+                                state: { tweetdata: element, userId: element.userId, all: element }
+                              }}
+                              >
+                                {element.tweet}
+                              </Link>
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </li>
+                    )
+                  })}
+                  {/* {tweetInfo.length > 0 && tweetInfo[0].usersTweets.length > 0 && (
                     tweetInfo.map((element, index) => {
                       return element.usersTweets.map((element2, index2) => {
                         return (
@@ -128,7 +151,7 @@ const App: React.FC = () => {
                         )
                       })
                     })
-                  )}
+                  )} */}
                 </ul>
               </div>
             </div>
@@ -139,3 +162,57 @@ const App: React.FC = () => {
   )
 }
 export default App
+
+
+// let unknownInput: unknown;
+// let anyInput: any;
+
+// unknownInput = 'hello';
+// console.log(unknownInput)
+// // unknownInput = 999;
+// console.log(unknownInput)
+
+// const text = anyInput
+
+// if (typeof unknownInput === 'string') {
+//   console.log(typeof unknownInput)
+// } else {
+//   console.log(typeof unknownInput)
+// }
+
+// function error(message: string) {
+//   throw new Error(message);
+// }
+
+// interface human {
+//   name: string,
+//   age: number
+// }
+
+// const human1: human = {
+//   name: 'iida',
+//   age: 24
+// }
+
+// console.log(human1)
+// console.log(typeof human1.name)
+// console.log(typeof human1.age)
+
+
+// interface obj {
+//   readonly name: string,
+//   age: number,
+//   hello(name: string): void
+// }
+
+// const obj2: obj = {
+//   name: 'iida',
+//   age: 24,
+//   hello(name: string) {
+//     console.log(name + 'です')
+//   }
+// }
+
+// console.log(obj2);
+// console.log(typeof obj2.name);
+// obj2.hello('飯田');

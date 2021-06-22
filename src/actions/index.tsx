@@ -55,7 +55,7 @@ export const deleteStateTweet = (tweetId) => {
 }
 
 export const fetchAllTweets = () => (dispatch) => {
-  const tweetArray: any[] = [];
+  const tweetArray: Tweet[] = [];
   firebase
     .firestore()
     .collection(`tweets/`)
@@ -64,24 +64,24 @@ export const fetchAllTweets = () => (dispatch) => {
       // ユーザー一人一人のツイートをまとめる
       snapshot.forEach((doc) => {
         // ユーザーに紐づいたツイートを取得
-        console.log(doc.id)
-        console.log(doc.data())
+        // console.log(doc.id)
+        // console.log(doc.data())
 
-        const getTweet: Tweet = {
+        const getTweetInfo: Tweet = {
           tweet: doc.data().tweet,
           tweetId: doc.id,
           userId: doc.data().userId
         };
-        console.log(getTweet)
-        tweetArray.push(getTweet);
-        console.log(tweetArray);
+        // console.log(getTweetInfo)
+        tweetArray.push(getTweetInfo);
       });
+      console.log(tweetArray);
       // ユーザーに紐づいたツイートとユーザーのIDが格納される。
-      const newTweetArray = {
-        usersTweets: tweetArray,
-      };
-      console.log(newTweetArray);
-      dispatch(setTweets(newTweetArray))
+      // const newTweetArray = {
+      //   usersTweets: tweetArray,
+      // };
+      // console.log(newTweetArray);
+      dispatch(setTweets(tweetArray))
     });
 }
 
