@@ -169,10 +169,10 @@ describe('Reducer', () => {
     expect(result).toEqual(expected)
   })
 
-  test('ADD_NEW_TWEETSアクションの動作確認', () => {
+  test('ADD_NEW_TWEETアクションの動作確認', () => {
     const state = undefined;
     const action = {
-      type: 'ADD_NEW_TWEETS',
+      type: 'ADD_NEW_TWEET',
       tweet: {
         tweet: 'ツイートです',
         tweetId: 'TwitterId0123456789',
@@ -196,9 +196,31 @@ describe('Reducer', () => {
         }
       ]
     };
-    console.log(result);
-    console.log(expected);
+    expect(result).toEqual(expected);
+  })
 
+  test('DELETE_STATE_TWEETアクションの動作確認', () => {
+    const state = {
+      Tweet: [{
+        tweet: 'ツイートです',
+        tweetId: 'TwitterId0123456789',
+        userId: 'UserId0123456789',
+        userName: 'テストユーザー'
+      }]
+    };
+    const action = {
+      type: 'DELETE_STATE_TWEET',
+      tweetId: 'TwitterId0123456789'
+    };
+    const result = reducer(state, action);
+    const expected = {
+      User: {
+        name: '',
+        email: '',
+        login_user: false
+      },
+      Tweet: []
+    };
     expect(result).toEqual(expected);
   })
 })
