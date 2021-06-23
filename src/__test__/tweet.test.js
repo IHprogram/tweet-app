@@ -1,4 +1,4 @@
-import { setTweets } from '../actions'
+import { setTweets, addNewTweet } from '../actions'
 import { render, screen } from '@testing-library/react';
 import Header from '../components/header/Header'
 import TweetForm from '../components/TweetForm'
@@ -81,7 +81,7 @@ describe('Actions', () => {
   test('ActionCreatorのsetTweetsをテスト', () => {
     const tweets = [
       {
-        tweet: '1番目',
+        tweet: 'ツイートです',
         tweetId: 'TwitterId0123456789',
         userId: 'UserId0123456789',
         userName: 'テストユーザー'
@@ -94,6 +94,22 @@ describe('Actions', () => {
       type: 'SET_TWEETS',
       tweets: tweets
     }
+    expect(result).toEqual(expected);
+  })
+
+  test('ActionCreatorのaddNewTweetをテスト', () => {
+    const tweet = {
+      tweet: 'ツイートです',
+      tweetId: 'TwitterId0123456789',
+      userId: 'UserId0123456789',
+      userName: 'テストユーザー'
+    };
+    const result = addNewTweet(tweet);
+    const expected = {
+      type: 'ADD_NEW_TWEET',
+      tweet: tweet
+    }
+
     expect(result).toEqual(expected);
   })
 })
