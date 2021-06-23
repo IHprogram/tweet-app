@@ -1,5 +1,4 @@
-// import { setUserInfo } from '../actions'
-// import { useDispatch } from "react-redux";
+import { setUserInfo } from '../actions'
 import { render, screen } from '@testing-library/react';
 import Header from '../components/header/Header'
 import TweetForm from '../components/TweetForm'
@@ -77,24 +76,21 @@ describe('ツイート投稿画面のテキストの確認', () => {
   })
 })
 
-// describe('Actions', () => {
-//   test('ActionCreatorのsetUserInfoをテスト', () => {
-
-//     const name = "名前";
-//     const email = 'email@email.com';
-//     const result = dispatch(setUserInfo(name, email))
-//     // const result = setUserInfo(name, email);
-//     const login_user = true;
-//     const expected = {
-//       type: 'SET_USER_INFO',
-//       name: name,
-//       email: email,
-//       login_user: login_user
-//     }
-
-//     expect(result).toEqual(expected);
-//   })
-// })
+describe('Actions', () => {
+  test('ActionCreatorのsetUserInfoをテスト', () => {
+    const name = "名前";
+    const email = 'email@email.com';
+    const result = setUserInfo(name, email);
+    const login_user = true;
+    const expected = {
+      type: 'SET_USER_INFO',
+      name: name,
+      email: email,
+      login_user: login_user
+    }
+    expect(result).toEqual(expected);
+  })
+})
 
 // describe('tweets Reducer', () => {
 //   test('初期値', () => {
