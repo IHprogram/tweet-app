@@ -168,4 +168,37 @@ describe('Reducer', () => {
     };
     expect(result).toEqual(expected)
   })
+
+  test('ADD_NEW_TWEETSアクションの動作確認', () => {
+    const state = undefined;
+    const action = {
+      type: 'ADD_NEW_TWEETS',
+      tweet: {
+        tweet: 'ツイートです',
+        tweetId: 'TwitterId0123456789',
+        userId: 'UserId0123456789',
+        userName: 'テストユーザー'
+      }
+    };
+    const result = reducer(state, action);
+    const expected = {
+      User: {
+        name: '',
+        email: '',
+        login_user: false
+      },
+      Tweet: [
+        {
+          tweet: 'ツイートです',
+          tweetId: 'TwitterId0123456789',
+          userId: 'UserId0123456789',
+          userName: 'テストユーザー'
+        }
+      ]
+    };
+    console.log(result);
+    console.log(expected);
+
+    expect(result).toEqual(expected);
+  })
 })
