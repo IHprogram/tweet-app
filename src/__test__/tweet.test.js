@@ -12,7 +12,7 @@ const store = createStore(reducer, applyMiddleware(thunk));
 
 // import reducer from '../reducer/tweet'
 
-describe('テキストの確認', () => {
+describe('ヘッダーのテキストの確認', () => {
   test('ヘッダーロゴ「Tweet App」が表示されているか確認', () => {
     const loginUser = false;
     render(<Provider store={store}><MemoryRouter><Header loginUser={loginUser} /></MemoryRouter></Provider>);
@@ -20,10 +20,33 @@ describe('テキストの確認', () => {
     expect(linkElement).toBeInTheDocument();
   })
 
-  test('ログイン画面へのリンクボタンが表示されているか確認', () => {
+  test('ログアウト時に、ログイン画面へのリンクボタンが表示されているか確認', () => {
+    // ログアウト時、stateのloginUserの値はfalseになっている
     const loginUser = false;
     render(<Provider store={store}><MemoryRouter><Header loginUser={loginUser} /></MemoryRouter></Provider>);
     const linkElement = screen.getByText(/ログイン/i);
+    expect(linkElement).toBeInTheDocument();
+  })
+
+  test('ログアウト時に、新規画面へのリンクボタンが表示されているか確認', () => {
+    const loginUser = false;
+    render(<Provider store={store}><MemoryRouter><Header loginUser={loginUser} /></MemoryRouter></Provider>);
+    const linkElement = screen.getByText(/新規登録/i);
+    expect(linkElement).toBeInTheDocument();
+  })
+
+  test('ログイン時に、ツイート投稿画面へのリンクボタンが表示されているか確認', () => {
+    // ログイン時、stateのloginUserの値はtrueになっている
+    const loginUser = true;
+    render(<Provider store={store}><MemoryRouter><Header loginUser={loginUser} /></MemoryRouter></Provider>);
+    const linkElement = screen.getByText(/投稿する/i);
+    expect(linkElement).toBeInTheDocument();
+  })
+
+  test('ログイン時に、ログアウトボタンが表示されているか確認', () => {
+    const loginUser = true;
+    render(<Provider store={store}><MemoryRouter><Header loginUser={loginUser} /></MemoryRouter></Provider>);
+    const linkElement = screen.getByText(/ログアウト/i);
     expect(linkElement).toBeInTheDocument();
   })
 })
