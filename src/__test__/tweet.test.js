@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reducer from '../reducers/index';
 import { MemoryRouter } from 'react-router-dom'
-import { Tweet } from '../Types';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -124,15 +123,19 @@ describe('Actions', () => {
   })
 })
 
-
-
-// describe('tweets Reducer', () => {
-//   test('初期値', () => {
-//     const state = undefined;
-//     const action = {};
-//     const result = reducer(state, action);
-//     const expect = {
-
-//     }
-//   })
-// })
+describe('Reducer', () => {
+  test('初期値の確認', () => {
+    const state = undefined;
+    const action = {};
+    const result = reducer(state, action);
+    const expected = {
+      User: {
+        name: '',
+        email: '',
+        login_user: false
+      },
+      Tweet: []
+    }
+    expect(result).toEqual(expected)
+  })
+})
