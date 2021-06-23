@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reducer from '../reducers/index';
 import { MemoryRouter } from 'react-router-dom';
-import { setUserInfo } from '../actions';
+import { setUserInfo, logoutUser } from '../actions';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -76,6 +76,14 @@ describe('テキストが表示されているかの確認', () => {
         name: name,
         email: email,
         login_user: login_user
+      }
+      expect(result).toEqual(expected);
+    })
+
+    test('ActionCreatorのlogoutUserをテスト', () => {
+      const result = logoutUser();
+      const expected = {
+        type: 'LOGOUT_USER'
       }
       expect(result).toEqual(expected);
     })
