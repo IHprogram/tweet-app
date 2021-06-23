@@ -138,4 +138,34 @@ describe('Reducer', () => {
     }
     expect(result).toEqual(expected)
   })
+
+  test('SET_TWEETSアクションの動作確認', () => {
+    const state = undefined;
+    const action = {
+      type: 'SET_TWEETS',
+      tweets: [{
+        tweet: 'ツイートです',
+        tweetId: 'TwitterId0123456789',
+        userId: 'UserId0123456789',
+        userName: 'テストユーザー'
+      }]
+    };
+    const result = reducer(state, action);
+    const expected = {
+      User: {
+        name: '',
+        email: '',
+        login_user: false
+      },
+      Tweet: [
+        {
+          tweet: 'ツイートです',
+          tweetId: 'TwitterId0123456789',
+          userId: 'UserId0123456789',
+          userName: 'テストユーザー'
+        }
+      ]
+    };
+    expect(result).toEqual(expected)
+  })
 })
