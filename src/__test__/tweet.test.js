@@ -1,4 +1,4 @@
-import { setTweets, addNewTweet } from '../actions'
+import { setTweets, addNewTweet, deleteStateTweet } from '../actions'
 import { render, screen } from '@testing-library/react';
 import Header from '../components/header/Header'
 import TweetForm from '../components/TweetForm'
@@ -111,6 +111,16 @@ describe('Actions', () => {
     }
 
     expect(result).toEqual(expected);
+  })
+
+  test('ActionCreatorのdeleteStateTweetをテスト', () => {
+    const tweetId = 'TwitterId0123456789';
+    const result = deleteStateTweet(tweetId);
+    const expected = {
+      type: 'DELETE_STATE_TWEET',
+      tweetId: tweetId
+    }
+    expect(result).toEqual(expected)
   })
 })
 
