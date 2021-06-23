@@ -64,30 +64,29 @@ describe('テキストが表示されているかの確認', () => {
       expect(screen.getByText('パスワード')).toBeInTheDocument();
     })
   })
-
-  describe('Actions', () => {
-    test('ActionCreatorのsetUserInfoをテスト', () => {
-      const name = "名前";
-      const email = 'email@email.com';
-      const result = setUserInfo(name, email);
-      const login_user = true;
-      const expected = {
-        type: 'SET_USER_INFO',
-        name: name,
-        email: email,
-        login_user: login_user
-      }
-      expect(result).toEqual(expected);
-    })
-
-    test('ActionCreatorのlogoutUserをテスト', () => {
-      const result = logoutUser();
-      const expected = {
-        type: 'LOGOUT_USER'
-      }
-      expect(result).toEqual(expected);
-    })
-  })
 })
 
+describe('Actions', () => {
+  test('ActionCreatorのsetUserInfoをテスト', () => {
+    const name = "名前";
+    const email = 'email@email.com';
+    const result = setUserInfo(name, email);
+    const login_user = true;
+    const expected = {
+      type: 'SET_USER_INFO',
+      name: name,
+      email: email,
+      login_user: login_user
+    }
+    expect(result).toEqual(expected);
+  })
+
+  test('ActionCreatorのlogoutUserをテスト', () => {
+    const result = logoutUser();
+    const expected = {
+      type: 'LOGOUT_USER'
+    }
+    expect(result).toEqual(expected);
+  })
+})
 

@@ -1,4 +1,4 @@
-import { setUserInfo } from '../actions'
+import { setTweets } from '../actions'
 import { render, screen } from '@testing-library/react';
 import Header from '../components/header/Header'
 import TweetForm from '../components/TweetForm'
@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reducer from '../reducers/index';
 import { MemoryRouter } from 'react-router-dom'
+import { Tweet } from '../Types';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -75,6 +76,29 @@ describe('ツイート投稿画面のテキストの確認', () => {
     expect(screen.getByText('投稿内容を入力してください')).toBeInTheDocument();
   })
 })
+
+describe('Actions', () => {
+  test('ActionCreatorのsetTweetsをテスト', () => {
+    const tweets = [
+      {
+        tweet: '1番目',
+        tweetId: 'TwitterId0123456789',
+        userId: 'UserId0123456789',
+        userName: 'テストユーザー'
+      }
+    ];
+
+    const result = setTweets(tweets);
+
+    const expected = {
+      type: 'SET_TWEETS',
+      tweets: tweets
+    }
+    expect(result).toEqual(expected);
+  })
+})
+
+
 
 // describe('tweets Reducer', () => {
 //   test('初期値', () => {
