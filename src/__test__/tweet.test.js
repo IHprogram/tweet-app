@@ -51,6 +51,13 @@ describe('非同期ActionCreatorに関するテスト', () => {
     expect(next).toHaveBeenCalledWith(action)
   })
 
+  test('deleteTweetの確認', () => {
+    const { next, invoke } = create();
+    const action = { type: 'DELETE_STATE_TWEET' };
+    invoke(action)
+    expect(next).toHaveBeenCalledWith(action)
+  })
+
   test('関数の呼び出しを確認', () => {
     const { invoke } = create()
     const fn = jest.fn();
