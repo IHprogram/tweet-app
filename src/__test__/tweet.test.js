@@ -1,18 +1,69 @@
-import { setTweets, addNewTweet, deleteStateTweet } from '../actions'
+import { setTweets, addNewTweet, deleteStateTweet, fetchAllTweets } from '../actions'
 import { render, screen } from '@testing-library/react';
 import Header from '../components/header/Header'
+// import App from '../App.tsx'
 import TweetForm from '../components/TweetForm'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import reducer from '../reducers/index';
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom';
+import configureStore from 'redux-mock-store';
+import firebase from '../firebase/firebase'
 
 const store = createStore(reducer, applyMiddleware(thunk));
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 
-// import reducer from '../reducer/tweet'
+// middlewareの関数を定義
+const thunk2 =
+  ({ dispatch, getState }) =>
+    next =>
+      action => {
+        if (typeof action === 'function') {
+          return action(dispatch, getState)
+        }
+        return next(action)
+      }
 
-describe('ヘッダーのテキストの確認', () => {
+const create = () => {
+  const store2 = {
+    getState: jest.fn(() => ({})),
+    dispatch: jest.fn()
+  }
+  const next = jest.fn()
+  const invoke = action => thunk2(store2)(next)(action)
+  return { store2, next, invoke }
+}
+
+describe('非同期ActionCreatorに関するテスト', () => {
+  test('fetchAllTweetsの確認', () => {
+    const { next, invoke } = create();
+    const action = { type: 'SET_TWEETS' };
+    invoke(action)
+    expect(next).toHaveBeenCalledWith(action)
+  })
+
+  test('関数の呼び出しを確認', () => {
+    const { invoke } = create()
+    const fn = jest.fn();
+    invoke(fn)
+    expect(fn).toHaveBeenCalled()
+  })
+
+  test('dispatchとgetStateを返すことを確認', () => {
+    const { store2, invoke } = create();
+    invoke((dispatch, getState) => {
+      dispatch('SET_TWEETS');
+      getState();
+    })
+    expect(store2.dispatch).toHaveBeenCalledWith('SET_TWEETS')
+    expect(store2.getState).toHaveBeenCalled()
+  })
+})
+
+describe('ヘッダーのテキストの確認！', () => {
+
   test('ヘッダーロゴ「Tweet App」が表示されているか確認', () => {
     const loginUser = false;
     render(<Provider store={store}><MemoryRouter><Header loginUser={loginUser} /></MemoryRouter></Provider>);
@@ -47,6 +98,7 @@ describe('ヘッダーのテキストの確認', () => {
     const loginUser = true;
     render(<Provider store={store}><MemoryRouter><Header loginUser={loginUser} /></MemoryRouter></Provider>);
     const linkElement = screen.getByText('ログアウト');
+    // console.log(linkElement)
     expect(linkElement).toBeInTheDocument();
   })
 })
