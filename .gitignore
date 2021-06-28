@@ -33,3 +33,4 @@ src/firebase
 dist/
 firebase.json
 404.html
+default.json
