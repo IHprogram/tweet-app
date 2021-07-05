@@ -35,3 +35,6 @@ firebase.json
 404.html
 default.json
 server/mongouri.js
+server/node_modules
+server/package.json
+server/package-lock.json
