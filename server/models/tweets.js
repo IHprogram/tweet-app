@@ -6,6 +6,6 @@ const tweetsSchema = new mongoose.Schema({
   userName: String
 })
 
-const TweetSchema = mongoose.model('TweetSchema', tweetsSchema);
+const Tweet = mongoose.model('Tweet', tweetsSchema);
 
-export default TweetSchema;
+export default Tweet;
