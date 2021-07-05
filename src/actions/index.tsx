@@ -99,24 +99,40 @@ export const fetchAllTweets = () => (dispatch) => {
 
 
 export const addTweet = (tweet, loginUserId) => (dispatch) => {
-  firebase
-    .firestore()
-    .collection(`tweets`)
-    .add({ tweet: tweet.tweet, userName: tweet.userName, userId: loginUserId })
-    .then(result => {
-
+  axios.post('http://localhost:3001/tweets', { tweet: tweet.tweet, userName: tweet.userName, userId: loginUserId })
+    .then(res => {
+      console.log(res);
       const getTweet: Tweet = {
-        tweet: tweet.tweet,
-        tweetId: result.id,
-        userId: loginUserId,
-        userName: tweet.userName
+        tweet: res.data.tweet,
+        tweetId: res.data._id,
+        userId: res.data.userId,
+        userName: res.data.userName
       };
       dispatch(addNewTweet(getTweet));
-      return loginUserId;
-    })
-    .catch(errors => {
+    }).catch(errors => {
       console.dir(errors)
     })
+
+  // 以下、firestoreへのツイート保存処理
+
+  // firebase
+  //   .firestore()
+  //   .collection(`tweets`)
+  //   .add({ tweet: tweet.tweet, userName: tweet.userName, userId: loginUserId })
+  //   .then(result => {
+
+  //     const getTweet: Tweet = {
+  //       tweet: tweet.tweet,
+  //       tweetId: result.id,
+  //       userId: loginUserId,
+  //       userName: tweet.userName
+  //     };
+  //     dispatch(addNewTweet(getTweet));
+  //     return loginUserId;
+  //   })
+  //   .catch(errors => {
+  //     console.dir(errors)
+  //   })
 }
 
 export const deleteTweet = (tweetId) => (dispatch) => {
