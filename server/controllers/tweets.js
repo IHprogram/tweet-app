@@ -23,3 +23,15 @@ export const createTweet = async (req, res) => {
     console.log(error)
   }
 }
+
+export const deleteTweet = async (req, res) => {
+  const id = req.params.id;
+  try {
+    await Tweet.deleteOne({ _id: id });
+
+    // 削除したツイートのID(定数id)を返している
+    res.status(200).json(id);
+  } catch (error) {
+    console.log(error);
+  }
+}

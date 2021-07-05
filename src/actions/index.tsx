@@ -136,18 +136,23 @@ export const addTweet = (tweet, loginUserId) => (dispatch) => {
 }
 
 export const deleteTweet = (tweetId) => (dispatch) => {
-  console.log('deleteするよ！')
   console.log(tweetId)
-  firebase
-    .firestore()
-    .collection(`tweets`)
-    .doc(tweetId)
-    .delete()
-    .then(() => {
-      dispatch(deleteStateTweet(tweetId))
-    })
-    .catch(errors => {
-      console.dir(errors)
-    })
+  axios.delete(`http://localhost:3001/tweets/${tweetId}`).then(res => {
+    console.log('resの中身です', res);
+    console.log(res.data)
+    dispatch(deleteStateTweet(res.data));
+  })
+
+  // firebase
+  //   .firestore()
+  //   .collection(`tweets`)
+  //   .doc(tweetId)
+  //   .delete()
+  //   .then(() => {
+  //     dispatch(deleteStateTweet(tweetId))
+  //   })
+  //   .catch(errors => {
+  //     console.dir(errors)
+  // })
 }
 
