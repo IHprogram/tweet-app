@@ -79,6 +79,7 @@ const App: React.FC = () => {
   useEffect(() => {
     setTweetInfo([]);
     setTweetInfo(allTweets);
+    console.log(tweetInfo);
   }, [allTweets]);
 
   return (

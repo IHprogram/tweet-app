@@ -8,6 +8,7 @@ export const SET_USER_INFO = 'SET_USER_INFO';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_TWEETS = 'SET_TWEETS';
 export const ADD_NEW_TWEET = 'ADD_NEW_TWEET';
+export const UPDATE_TWEET = 'UPDATE_TWEET';
 export const DELETE_STATE_TWEET = 'DELETE_STATE_TWEET';
 
 export const setUserInfo = (name, email) => {
@@ -43,6 +44,15 @@ export const addNewTweet = (tweet) => {
     {
       type: ADD_NEW_TWEET,
       tweet: tweet
+    }
+  )
+}
+
+export const updateStateTweet = (updateTweet) => {
+  return (
+    {
+      type: UPDATE_TWEET,
+      updateTweet
     }
   )
 }
@@ -144,6 +154,7 @@ export const updateTweet = (tweet, tweetId) => (dispatch) => {
   axios.put(`http://localhost:3001/tweets/${tweetId}`, newData)
     .then(res => {
       console.log(res);
+      dispatch(updateStateTweet(res.data))
     })
     .catch(error => {
       console.log(error);

@@ -74,7 +74,7 @@ const Detail = ({ loginUserId }: Props) => {
 
   const updateButton = () => {
     dispatch(updateTweet(newTweet, tweetId));
-    // history.push('/')
+    history.push('/')
   }
 
   const cancelButton = () => {
