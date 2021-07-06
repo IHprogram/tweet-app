@@ -3,7 +3,6 @@ import Tweet from "../models/tweets.js";
 export const getTweets = async (req, res) => {
   try {
     const tweet = await Tweet.find();
-    console.log('tweetの中身', tweet);
     res.status(200).json(tweet);
   } catch (error) {
     console.log(error);
@@ -19,6 +18,23 @@ export const createTweet = async (req, res) => {
     await newTweet.save().then(() => {
       res.status(201).json(newTweet);
     })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateTweet = async (req, res) => {
+  console.log(req.body)
+  const tweetId = req.body._id;
+  const tweet = req.body.tweet;
+  try {
+    await Tweet.findOneAndUpdate({ _id: tweetId }, { $set: { tweet } })
+    // 更新したツイート内容とツイートのIDを返す
+    const updatedTweet = {
+      _id: tweetId,
+      tweet
+    };
+    res.status(200).json(updatedTweet);
   } catch (error) {
     console.log(error)
   }

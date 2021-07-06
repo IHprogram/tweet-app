@@ -1,6 +1,7 @@
 import firebase from '../firebase/firebase'
 import { UserInfo, Tweet } from '../Types';
 import axios from 'axios';
+import { idText } from 'typescript';
 
 
 export const SET_USER_INFO = 'SET_USER_INFO';
@@ -133,6 +134,20 @@ export const addTweet = (tweet, loginUserId) => (dispatch) => {
   //   .catch(errors => {
   //     console.dir(errors)
   //   })
+}
+
+export const updateTweet = (tweet, tweetId) => (dispatch) => {
+  const newData = {
+    _id: tweetId,
+    tweet: tweet,
+  };
+  axios.put(`http://localhost:3001/tweets/${tweetId}`, newData)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(error => {
+      console.log(error);
+    })
 }
 
 export const deleteTweet = (tweetId) => (dispatch) => {

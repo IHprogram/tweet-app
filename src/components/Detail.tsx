@@ -64,8 +64,7 @@ const Detail = ({ loginUserId }: Props) => {
   }
 
   const updateFormButton = () => {
-    console.log('更新処理')
-    // history.push('/')
+    setFormFlag(true);
   }
 
   const tweetChange = (e) => {
@@ -74,8 +73,12 @@ const Detail = ({ loginUserId }: Props) => {
   }
 
   const updateButton = () => {
-    console.log('更新処理')
+    dispatch(updateTweet(newTweet, tweetId));
     // history.push('/')
+  }
+
+  const cancelButton = () => {
+    setFormFlag(false);
   }
 
   return (
@@ -91,7 +94,7 @@ const Detail = ({ loginUserId }: Props) => {
           {userId === loginUserId ?
             <Box mx="auto">
               <Button variant="outlined" color="secondary" onClick={deleteButton}>削除</Button>
-              <Button variant="outlined" color="primary" onClick={updateFormButton}>更新</Button>
+              <Button variant="outlined" color="primary" onClick={updateFormButton}>更新する</Button>
             </Box>
             :
             (<div></div>
@@ -99,20 +102,25 @@ const Detail = ({ loginUserId }: Props) => {
         </CardContent>
       </Card>
 
-      <Grid container style={styles} alignItems="center" justify="center">
-        <Grid item xs={12}>
-          <form>
-            <Grid container alignItems="center" justify="space-between">
-              <Grid item>
-                <TextField variant="outlined" label='更新内容' onChange={e => tweetChange(e)} style={updateFormStyle} />
+      {formFlag ?
+        <Grid container style={styles} alignItems="center" justify="center">
+          <Grid item xs={12}>
+            <form>
+              <Grid container alignItems="center" justify="space-between">
+                <Grid item>
+                  <TextField variant="outlined" label='更新内容' onChange={e => tweetChange(e)} style={updateFormStyle} />
+                </Grid>
+                <Grid item>
+                  <Button variant="outlined" color="primary" onClick={updateButton} style={updateFormStyle}>更新</Button>
+                  <Button variant="outlined" onClick={cancelButton} style={updateFormStyle}>キャンセル</Button>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Button variant="outlined" color="primary" onClick={updateButton} style={updateFormStyle}>更新</Button>
-              </Grid>
-            </Grid>
-          </form>
+            </form>
+          </Grid>
         </Grid>
-      </Grid>
+        :
+        <div></div>
+      }
     </div >
   )
 }
