@@ -9,4 +9,5 @@ export interface Tweet {
   tweetId: string
   userId: string
   userName: string
+  tweetImage?: string
 }
