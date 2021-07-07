@@ -60,9 +60,15 @@ const Detail = ({ loginUserId }: Props) => {
   }
 
   const ImageStyle = {
+    'width': '100%',
+    'height': '100%',
+    'object-fit': 'contain' // 画像を自動でトリミングする
+  }
+
+  const ImageWrapper = {
     'width': '500px',
     'height': '500px',
-    'object-fit': 'cover' // 画像を自動でトリミングする
+    'backgroundColor': '#d3d3d3'
   }
 
   const deleteButton = () => {
@@ -99,7 +105,7 @@ const Detail = ({ loginUserId }: Props) => {
             ツイート内容：{tweet}
           </Typography>
           {tweetImage ?
-            <div>
+            <div style={ImageWrapper}>
               <img src={tweetImage} alt="tweetImage" style={ImageStyle} />
             </div>
             :
@@ -117,25 +123,27 @@ const Detail = ({ loginUserId }: Props) => {
       </Card>
 
       {formFlag ?
-        <Grid container style={styles} alignItems="center" justify="center">
-          <Grid item xs={12}>
-            <form>
-              <Grid container alignItems="center" justify="space-between">
-                <Grid item>
-                  <TextField variant="outlined" label='更新内容' onChange={e => tweetChange(e)} style={updateFormStyle} />
+        <Box mb={10}>
+          <Grid container style={styles} alignItems="center" justify="center">
+            <Grid item xs={12}>
+              <form>
+                <Grid container alignItems="center" justify="space-between">
+                  <Grid item>
+                    <TextField variant="outlined" label='更新内容' onChange={e => tweetChange(e)} style={updateFormStyle} />
+                  </Grid>
+                  <Grid item>
+                    <Button variant="outlined" color="primary" onClick={updateButton} style={updateFormStyle}>更新</Button>
+                    <Button variant="outlined" onClick={cancelButton} style={updateFormStyle}>キャンセル</Button>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary" onClick={updateButton} style={updateFormStyle}>更新</Button>
-                  <Button variant="outlined" onClick={cancelButton} style={updateFormStyle}>キャンセル</Button>
-                </Grid>
-              </Grid>
-            </form>
+              </form>
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
         :
         <div></div>
       }
-    </div >
+    </div>
   )
 }
 
