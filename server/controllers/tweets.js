@@ -1,7 +1,4 @@
 import Tweet from "../models/tweets.js";
-import path from "path";
-
-console.log('pathです', path);
 
 export const getTweets = async (req, res) => {
   try {
@@ -13,7 +10,6 @@ export const getTweets = async (req, res) => {
 }
 
 export const createTweet = async (req, res) => {
-  console.log(req.body);
   const tweet = req.body.tweet;
   const userId = req.body.userId;
   const userName = req.body.userName;
@@ -29,7 +25,6 @@ export const createTweet = async (req, res) => {
 }
 
 export const updateTweet = async (req, res) => {
-  console.log(req.body)
   const tweetId = req.body._id;
   const tweet = req.body.tweet;
   const tweetImage = req.body.tweetImage;

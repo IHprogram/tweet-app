@@ -51,13 +51,11 @@ const TweetForm = ({ loginUserId, userName }: Props) => {
   }
 
   const submit = (): void => {
-    console.log(typeof selectedFile);
     const newTweetOb: newTweet = {
       tweet: tweet,
       userName: userName,
       tweetImage: selectedFile
     }
-    console.log(newTweetOb)
     dispatch(addTweet(newTweetOb, loginUserId));
     history.push('/')
   }

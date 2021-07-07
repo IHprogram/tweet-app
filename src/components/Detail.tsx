@@ -109,7 +109,6 @@ const Detail = ({ loginUserId }: Props) => {
   }
 
   const updateButton = () => {
-    console.log(selectedFile)
     dispatch(updateTweet(newTweet, tweetId, selectedFile));
     history.push('/')
   }

@@ -70,7 +70,6 @@ export const fetchAllTweets = () => (dispatch) => {
   const tweetArray: Tweet[] = [];
   axios.get('http://localhost:3001/tweets')
     .then(res => {
-      // console.log('resです', res);
       res.data.forEach(doc => {
         const getTweetInfo: Tweet = {
           tweet: doc.tweet,
@@ -81,7 +80,6 @@ export const fetchAllTweets = () => (dispatch) => {
         };
         tweetArray.push(getTweetInfo);
       })
-      console.log('axiosです', tweetArray);
       // 取得したツイート情報がstoreに格納される。
       dispatch(setTweets(tweetArray))
     })
@@ -111,10 +109,8 @@ export const fetchAllTweets = () => (dispatch) => {
 
 
 export const addTweet = (tweet, loginUserId) => (dispatch) => {
-  console.log(tweet);
   axios.post('http://localhost:3001/tweets', { tweet: tweet.tweet, userName: tweet.userName, userId: loginUserId, tweetImage: tweet.tweetImage })
     .then(res => {
-      console.log(res);
       // ifで画像有り無しの条件分岐したほうがいいかも
       const getTweet: Tweet = {
         tweet: res.data.tweet,
@@ -158,7 +154,6 @@ export const updateTweet = (tweet, tweetId, tweetImage) => (dispatch) => {
   };
   axios.put(`http://localhost:3001/tweets/${tweetId}`, newData)
     .then(res => {
-      console.log(res);
       dispatch(updateStateTweet(res.data))
     })
     .catch(error => {
@@ -167,10 +162,7 @@ export const updateTweet = (tweet, tweetId, tweetImage) => (dispatch) => {
 }
 
 export const deleteTweet = (tweetId) => (dispatch) => {
-  console.log(tweetId)
   axios.delete(`http://localhost:3001/tweets/${tweetId}`).then(res => {
-    console.log('resの中身です', res);
-    console.log(res.data)
     dispatch(deleteStateTweet(res.data));
   })
 

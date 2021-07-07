@@ -60,17 +60,11 @@ const SignIn = () => {
   const login = (): void => {
     const loginEmail: string = email
     const loginPassword: string = password
-    console.log(loginEmail)
-    console.log(loginPassword)
 
     firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword)
       .then(result => {
         const userName = result.user!.displayName;
-        if (userName) {
-          console.log(userName)
-        }
         dispatch(setUserInfo(userName, loginEmail));
-        console.log(result);
         history.push('/');
       }).catch((error) => {
         alert('メールアドレスかパスワードが間違えています')

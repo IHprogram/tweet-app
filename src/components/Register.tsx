@@ -60,8 +60,6 @@ const SignUp = () => {
   const dispatch = useDispatch();
 
   const register = (): void => {
-    console.log('registerです')
-
     // 入力した名前、メールアドレス、パスワードの型チェック
     const registerPassword: string = password;
 
@@ -73,7 +71,6 @@ const SignUp = () => {
 
     firebase.auth().createUserWithEmailAndPassword(newUserInfo.email, registerPassword)
       .then(async result => {
-        console.log(result)
         await dispatch(setUserInfo(newUserInfo.name, newUserInfo.email));
         // 「firebase.auth().currentUser」の後に「!」で修飾することで、「firebase.auth().currentUserがnullならupdateProfileを行わない」という処理を行う。
         firebase.auth().currentUser!.updateProfile({
@@ -87,7 +84,6 @@ const SignUp = () => {
           }).catch((error) => {
             alert('ユーザー登録に失敗しました。お手数ですがもう一度やり直してください')
           })
-        console.log(result);
         history.push('/');
       }).catch((error) => {
         console.log(error)
