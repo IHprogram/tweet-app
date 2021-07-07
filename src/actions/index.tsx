@@ -110,7 +110,8 @@ export const fetchAllTweets = () => (dispatch) => {
 
 
 export const addTweet = (tweet, loginUserId) => (dispatch) => {
-  axios.post('http://localhost:3001/tweets', { tweet: tweet.tweet, userName: tweet.userName, userId: loginUserId })
+  console.log(tweet);
+  axios.post('http://localhost:3001/tweets', { tweet: tweet.tweet, userName: tweet.userName, userId: loginUserId, tweetImage: tweet.tweetImage })
     .then(res => {
       console.log(res);
       const getTweet: Tweet = {

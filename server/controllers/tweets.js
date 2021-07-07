@@ -10,10 +10,12 @@ export const getTweets = async (req, res) => {
 }
 
 export const createTweet = async (req, res) => {
+  console.log(req.body);
   const tweet = req.body.tweet;
   const userId = req.body.userId;
   const userName = req.body.userName;
-  const newTweet = new Tweet({ tweet: tweet, userId: userId, userName: userName });
+  const tweetImage = req.body.tweetImage;
+  const newTweet = new Tweet({ tweet: tweet, userId: userId, userName: userName, tweetImage: tweetImage });
   try {
     await newTweet.save().then(() => {
       res.status(201).json(newTweet);
