@@ -13,12 +13,10 @@ export default (state = initialState, action) => {
     case ADD_NEW_TWEET:
       return [...state, action.tweet]
     case UPDATE_TWEET:
-      console.log(state);
-      console.log(action.updateTweet);
       const target = state.findIndex(element => element.tweetId === action.updateTweet._id);
-      console.log(target)
       if (target !== -1) {
         state[target].tweet = action.updateTweet.tweet;
+        state[target].tweetImage = action.updateTweet.tweetImage;
         return [...state];
       }
       return state;

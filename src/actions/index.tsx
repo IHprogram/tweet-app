@@ -150,10 +150,11 @@ export const addTweet = (tweet, loginUserId) => (dispatch) => {
   //   })
 }
 
-export const updateTweet = (tweet, tweetId) => (dispatch) => {
+export const updateTweet = (tweet, tweetId, tweetImage) => (dispatch) => {
   const newData = {
     _id: tweetId,
     tweet: tweet,
+    tweetImage: tweetImage
   };
   axios.put(`http://localhost:3001/tweets/${tweetId}`, newData)
     .then(res => {

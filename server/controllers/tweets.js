@@ -32,12 +32,14 @@ export const updateTweet = async (req, res) => {
   console.log(req.body)
   const tweetId = req.body._id;
   const tweet = req.body.tweet;
+  const tweetImage = req.body.tweetImage;
   try {
-    await Tweet.findOneAndUpdate({ _id: tweetId }, { $set: { tweet } })
+    await Tweet.findOneAndUpdate({ _id: tweetId }, { $set: { tweet, tweetImage } })
     // 更新したツイート内容とツイートのIDを返す
     const updatedTweet = {
       _id: tweetId,
-      tweet
+      tweet,
+      tweetImage
     };
     res.status(200).json(updatedTweet);
   } catch (error) {

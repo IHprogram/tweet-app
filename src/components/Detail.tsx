@@ -14,6 +14,7 @@ import { Tweet } from '../Types';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { spacing, sizing } from '@material-ui/system';
+import Filebase64 from 'react-file-base64';
 
 interface Props {
   loginUserId: string
@@ -35,6 +36,7 @@ const Detail = ({ loginUserId }: Props) => {
 
   const [formFlag, setFormFlag] = useState(false);
   const [newTweet, setNewTweet] = useState('');
+  const [selectedFile, setSelectedFile] = useState('');
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -57,6 +59,14 @@ const Detail = ({ loginUserId }: Props) => {
   const updateFormStyle = {
     'width': '100%',
     'height': '100%',
+    'marginBottom': '20px'
+  }
+
+  const updateButtonStyle = {
+    'width': '20%',
+    'height': '100%',
+    'marginTop': '20px',
+    'marginLeft': '10px'
   }
 
   const ImageStyle = {
@@ -69,6 +79,19 @@ const Detail = ({ loginUserId }: Props) => {
     'width': '500px',
     'height': '500px',
     'backgroundColor': '#d3d3d3'
+  }
+
+  const textFieldWrapper = {
+    'width': '100%'
+  }
+
+  const updateCardStyle = {
+    'width': '70vw',
+    'margin': '50px auto'
+  }
+
+  const updateBoxStyle = {
+    'padding': '30px'
   }
 
   const deleteButton = () => {
@@ -86,7 +109,8 @@ const Detail = ({ loginUserId }: Props) => {
   }
 
   const updateButton = () => {
-    dispatch(updateTweet(newTweet, tweetId));
+    console.log(selectedFile)
+    dispatch(updateTweet(newTweet, tweetId, selectedFile));
     history.push('/')
   }
 
@@ -123,23 +147,30 @@ const Detail = ({ loginUserId }: Props) => {
       </Card>
 
       {formFlag ?
-        <Box mb={10}>
-          <Grid container style={styles} alignItems="center" justify="center">
-            <Grid item xs={12}>
-              <form>
-                <Grid container alignItems="center" justify="space-between">
-                  <Grid item>
-                    <TextField variant="outlined" label='更新内容' onChange={e => tweetChange(e)} style={updateFormStyle} />
+        <Card style={updateCardStyle}>
+          <Box style={updateBoxStyle}>
+            <Grid container alignItems="center" justify="center">
+              <Grid item xs={12}>
+                <form>
+                  <Grid container alignItems="center" justify="space-between">
+                    <Grid item style={textFieldWrapper}>
+                      <TextField variant="outlined" label='更新内容' onChange={e => tweetChange(e)} style={updateFormStyle} />
+                      <Filebase64
+                        type="file"
+                        multiple={false}
+                        onDone={({ base64 }) => setSelectedFile(base64)}
+                      />
+                    </Grid>
+                    <Grid item container alignItems="center" justify="flex-end">
+                      <Button variant="outlined" color="primary" onClick={updateButton} style={updateButtonStyle}>決定</Button>
+                      <Button variant="outlined" onClick={cancelButton} style={updateButtonStyle}>キャンセル</Button>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <Button variant="outlined" color="primary" onClick={updateButton} style={updateFormStyle}>更新</Button>
-                    <Button variant="outlined" onClick={cancelButton} style={updateFormStyle}>キャンセル</Button>
-                  </Grid>
-                </Grid>
-              </form>
+                </form>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        </Card>
         :
         <div></div>
       }
