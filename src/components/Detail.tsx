@@ -59,6 +59,12 @@ const Detail = ({ loginUserId }: Props) => {
     'height': '100%',
   }
 
+  const ImageStyle = {
+    'width': '500px',
+    'height': '500px',
+    'object-fit': 'cover' // 画像を自動でトリミングする
+  }
+
   const deleteButton = () => {
     dispatch(deleteTweet(tweetId))
     history.push('/')
@@ -93,13 +99,11 @@ const Detail = ({ loginUserId }: Props) => {
             ツイート内容：{tweet}
           </Typography>
           {tweetImage ?
-            <Typography>
-              <img src={tweetImage} alt="tweetImage" />
-            </Typography>
+            <div>
+              <img src={tweetImage} alt="tweetImage" style={ImageStyle} />
+            </div>
             :
-            <Typography>
-              画像がございません！
-            </Typography>
+            <div></div>
           }
           {userId === loginUserId ?
             <Box mx="auto">

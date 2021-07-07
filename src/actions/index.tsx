@@ -76,7 +76,8 @@ export const fetchAllTweets = () => (dispatch) => {
           tweet: doc.tweet,
           tweetId: doc._id,
           userId: doc.userId,
-          userName: doc.userName
+          userName: doc.userName,
+          tweetImage: doc.tweetImage
         };
         tweetArray.push(getTweetInfo);
       })

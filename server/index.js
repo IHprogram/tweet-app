@@ -13,10 +13,6 @@ app.use(express.json({ limit: '50mb', extended: true }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*")
-// })
-
 // ルーティング設定
 app.use('/tweets', tweetRoutes);
 
