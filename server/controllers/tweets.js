@@ -1,4 +1,7 @@
 import Tweet from "../models/tweets.js";
+import path from "path";
+
+console.log('pathです', path);
 
 export const getTweets = async (req, res) => {
   try {

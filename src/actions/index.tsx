@@ -114,11 +114,13 @@ export const addTweet = (tweet, loginUserId) => (dispatch) => {
   axios.post('http://localhost:3001/tweets', { tweet: tweet.tweet, userName: tweet.userName, userId: loginUserId, tweetImage: tweet.tweetImage })
     .then(res => {
       console.log(res);
+      // ifで画像有り無しの条件分岐したほうがいいかも
       const getTweet: Tweet = {
         tweet: res.data.tweet,
         tweetId: res.data._id,
         userId: res.data.userId,
-        userName: res.data.userName
+        userName: res.data.userName,
+        tweetImage: res.data.tweetImage
       };
       dispatch(addNewTweet(getTweet));
     }).catch(errors => {

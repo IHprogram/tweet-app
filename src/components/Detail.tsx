@@ -31,6 +31,7 @@ const Detail = ({ loginUserId }: Props) => {
   const userName: string = state.tweetdata.userName;
   const userId: string = state.userId;
   const tweetId: string = state.tweetdata.tweetId;
+  const tweetImage: string | undefined = state.tweetdata.tweetImage;
 
   const [formFlag, setFormFlag] = useState(false);
   const [newTweet, setNewTweet] = useState('');
@@ -91,6 +92,15 @@ const Detail = ({ loginUserId }: Props) => {
           <Typography>
             ツイート内容：{tweet}
           </Typography>
+          {tweetImage ?
+            <Typography>
+              <img src={tweetImage} alt="tweetImage" />
+            </Typography>
+            :
+            <Typography>
+              画像がございません！
+            </Typography>
+          }
           {userId === loginUserId ?
             <Box mx="auto">
               <Button variant="outlined" color="secondary" onClick={deleteButton}>削除</Button>

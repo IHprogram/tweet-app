@@ -87,6 +87,7 @@ const TweetForm = ({ loginUserId, userName }: Props) => {
             multiple={false}
             onDone={({ base64 }) => setSelectedFile(base64)}
           />
+          {/* <input type="file" name="photo" onChange={e => setSelectedFile(e.target.value)} /> */}
           <Button
             type="button"
             fullWidth
